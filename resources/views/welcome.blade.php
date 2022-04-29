@@ -18,7 +18,7 @@
         </style>
     </head>
     <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+        <div class="relative flex items-top justify-center min-h-screen bg-white sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
@@ -33,8 +33,8 @@
                 </div>
             @endif
 
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 text-stone-300 text-3xl">
-                Calibr8
+            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 text-black text-3xl font-bold">
+                Calibr<span class="text-red-500">8</span> Systems
             </div>
         </div>
     </body>
