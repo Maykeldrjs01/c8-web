@@ -19,6 +19,7 @@
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
+                            @foreach($subs as $subscriber)
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
                                 <!-- Name -->
                                 <td class="py-3 px-6 text-left">
@@ -26,20 +27,20 @@
                                         <div class="mr-2">
                                             <img class="w-10 h-10 rounded-full" src="https://randomuser.me/api/portraits/men/1.jpg" />
                                         </div>
-                                        <span>Eshal Rosas</span>
+                                        <span>{{ $subscriber->NAME }}</span>
                                     </div>
                                 </td>
 
                                 <!-- Phone Number -->
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <span class="font-medium">(+63) 9099009091</span>
+                                        <span class="font-medium">(+63) {{ $subscriber->SUBSCRIBER_NUMBER }}</span>
                                     </div>
                                 </td>
 
                                 <!-- Group -->
                                 <td class="py-3 px-6 text-center">
-                                    <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">CALIBR8</span>
+                                    <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $subscriber->GROUP_ID }}</span>
                                 </td>
                                 <td class="py-3 px-6 text-center">
                                     <div class="flex item-center justify-center">
@@ -56,6 +57,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

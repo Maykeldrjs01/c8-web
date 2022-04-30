@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SubscribersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +18,9 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/test', function () {
-    return view('welcome');
-});
+Route::get('/test', );
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [SubscribersController::class, 'index'])
+->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
