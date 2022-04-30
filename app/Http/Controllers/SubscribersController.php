@@ -7,18 +7,31 @@ use App\Models\BlastSubscribers;
 
 class SubscribersController extends Controller
 {
+    /**
+     * collection of subscribers to be used
+     * in app
+     */
     private $subs;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
 
+    /**
+     * Add the subs collection with pagination
+     * upon calling the controller
+     */
     public function __construct()
     {
        $this->subs = BlastSubscribers::paginate(10); 
     }
 
+    /**
+     * Returns the unfiltered collection 
+     * for dashboard view
+     */
     public function index()
     {
         //
@@ -27,6 +40,10 @@ class SubscribersController extends Controller
         ]); 
     }
 
+    /** 
+     * Returns a filtered collection of subscribers
+     * by the GROUP_ID in db
+     */
     public function filters($string)
     {
         $filtered = $this->subs->filter(function ($subs) use ($string){
