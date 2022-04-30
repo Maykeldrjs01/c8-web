@@ -36,6 +36,7 @@
                                         <span class="font-medium">(+63) 9099009091</span>
                                     </div>
                                 </td>
+
                                 <!-- Group -->
                                 <td class="py-3 px-6 text-center">
                                     <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">CALIBR8</span>
