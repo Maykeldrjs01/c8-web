@@ -7,16 +7,23 @@ use App\Models\BlastSubscribers;
 
 class SubscribersController extends Controller
 {
+    protected $subs;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+       $this->subs = BlastSubscribers::all(); 
+    }
+
     public function index()
     {
         //
         return view('dashboard',[
-            'subs'=> BlastSubscribers::all(),
+            'subs'=> $this->subs,
         ]); 
     }
 
