@@ -18,9 +18,12 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/test', );
+// Route::get('/test', );
 
-Route::get('/dashboard', [SubscribersController::class, 'index'])
+Route::get('dashboard/{filter}', [SubscribersController::class, 'filters'])
+->middleware(['auth'])->name('dashboard.filter');
+
+Route::get('dashboard', [SubscribersController::class, 'index'])
 ->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';

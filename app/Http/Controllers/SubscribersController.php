@@ -7,7 +7,7 @@ use App\Models\BlastSubscribers;
 
 class SubscribersController extends Controller
 {
-    protected $subs;
+    private $subs;
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +16,7 @@ class SubscribersController extends Controller
 
     public function __construct()
     {
-       $this->subs = BlastSubscribers::all(); 
+       $this->subs = BlastSubscribers::paginate(10); 
     }
 
     public function index()
@@ -27,6 +27,18 @@ class SubscribersController extends Controller
         ]); 
     }
 
+    public function filters($string)
+    {
+        $filtered = $this->subs->filter(function ($subs) use ($string){
+            if ($subs->GROUP_ID === $string){
+                return true;
+            }
+        });
+
+        return view('dashboard', [
+            'subs' => $filtered
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      *

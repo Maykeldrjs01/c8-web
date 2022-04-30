@@ -60,6 +60,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                        {{ $subs->links() }}
                 </div>
             </div>
         </div>
