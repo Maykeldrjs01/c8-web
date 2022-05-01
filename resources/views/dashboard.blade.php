@@ -6,7 +6,16 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
+        <div class="flex flex-col items-center justify-center bg-gray-100 font-sans overflow-hidden">
+            <form method="post" action="{{ route('dashboard.filters') }}">
+                @csrf
+                <input type="submit" value="Submit">
+                <select name="group">
+                    @foreach($groups as $option)
+                    <option value="{{ $option->GROUP_ID }}">{{ $option->GROUP_ID }}</option>
+                    @endforeach
+                </select>
+            </form>
             <div class="w-full lg:w-4/6">
                 <div class="bg-white shadow-md rounded my-6">
                     <table class="min-w-max w-full table-auto">
@@ -19,6 +28,8 @@
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
+
+                            <!-- Display all information about the subscribers in the table -->
                             @foreach($subs as $subscriber)
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
                                 <!-- Name -->
@@ -60,8 +71,10 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <!-- Show the pagination buttons if exists -->
                     @if (method_exists($subs, 'links'))
-                        {{ $subs->links() }}
+                    {{ $subs->links() }}
                     @endif
                 </div>
             </div>
