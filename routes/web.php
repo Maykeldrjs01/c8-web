@@ -20,10 +20,14 @@ Route::get('/', function () {
 
 // Route::get('/test', );
 
-Route::get('dashboard/{filter}', [SubscribersController::class, 'filters'])
-->middleware(['auth'])->name('dashboard.filter');
 
-Route::get('dashboard', [SubscribersController::class, 'index'])
-->middleware(['auth'])->name('dashboard');
 
+Route::middleware('auth')->group(function () {
+
+    Route::get('dashboard', [SubscribersController::class, 'index'])
+    ->name('dashboard.index');
+
+    Route::post('dashboard/filtered', [SubscribersController::class, 'filters'])
+    ->name('dashboard.filters');
+});
 require __DIR__.'/auth.php';
