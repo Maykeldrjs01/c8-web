@@ -12,6 +12,7 @@ class SubscribersController extends Controller
      * in app
      */
     private $subs;
+    private $subsPaginated;
 
     /**
      * Display a listing of the resource.
@@ -25,7 +26,8 @@ class SubscribersController extends Controller
      */
     public function __construct()
     {
-       $this->subs = BlastSubscribers::paginate(10); 
+       $this->subs = BlastSubscribers::all(); 
+       $this->subsPaginated = BlastSubscribers::paginate(10); 
     }
 
     /**
@@ -36,7 +38,7 @@ class SubscribersController extends Controller
     {
         //
         return view('dashboard',[
-            'subs'=> $this->subs,
+            'subs'=> $this->subsPaginated,
         ]); 
     }
 
@@ -46,11 +48,13 @@ class SubscribersController extends Controller
      */
     public function filters($string)
     {
-        $filtered = $this->subs->filter(function ($subs) use ($string){
-            if ($subs->GROUP_ID === $string){
-                return true;
-            }
-        });
+        // $filtered = $this->subs->filter(function ($subs) use ($string){
+        //     if ($subs->GROUP_ID ==  $string){
+        //         return true;
+        //     }
+        // });
+
+        $filtered = BlastSubscribers::where('GROUP_ID','=', $string)->paginate(10);
 
         return view('dashboard', [
             'subs' => $filtered

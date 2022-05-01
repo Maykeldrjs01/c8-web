@@ -25,7 +25,7 @@
                                 <td class="py-3 px-6 text-left">
                                     <div class="flex items-center">
                                         <div class="mr-2">
-                                            <img class="w-10 h-10 rounded-full" src="https://avatars.dicebear.com/api/adventurer-neutral/{{ $subscriber->NAME }}.svg" />
+                                            <img class="w-10 h-10 rounded-full" src="https://avatars.dicebear.com/api/adventurer-neutral/{{ $subscriber->SUBSCRIBER_NUMBER }}.svg" />
                                         </div>
                                         <span>{{ $subscriber->NAME }}</span>
                                     </div>
@@ -60,7 +60,9 @@
                             @endforeach
                         </tbody>
                     </table>
+                    @if (method_exists($subs, 'links'))
                         {{ $subs->links() }}
+                    @endif
                 </div>
             </div>
         </div>
