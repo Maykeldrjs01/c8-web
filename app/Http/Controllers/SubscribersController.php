@@ -12,6 +12,7 @@ class SubscribersController extends Controller
      * in app
      */
     private $subs;
+    private $filterOptions;
     private $subsPaginated;
 
     /**
@@ -27,7 +28,8 @@ class SubscribersController extends Controller
     public function __construct()
     {
        $this->subs = BlastSubscribers::all(); 
-       $this->subsPaginated = BlastSubscribers::paginate(10); 
+       $this->subsPaginated = BlastSubscribers::paginate(12); 
+       $this->filterOptions = $this->subs->keyBy('GROUP_ID');
     }
 
     /**
@@ -37,8 +39,10 @@ class SubscribersController extends Controller
     public function index()
     {
         //
+        // dd($this->subs->keyBy('GROUP_ID'));
         return view('dashboard',[
             'subs'=> $this->subsPaginated,
+            'groups' => $this->filterOptions
         ]); 
     }
 
@@ -46,18 +50,18 @@ class SubscribersController extends Controller
      * Returns a filtered collection of subscribers
      * by the GROUP_ID in db
      */
-    public function filters($string)
+    public function filters(Request $request)
     {
-        // $filtered = $this->subs->filter(function ($subs) use ($string){
-        //     if ($subs->GROUP_ID ==  $string){
-        //         return true;
-        //     }
-        // });
-
-        $filtered = BlastSubscribers::where('GROUP_ID','=', $string)->paginate(10);
+        $filter = $request->group;
+        $filtered = $this->subs->filter(function ($subs) use ($filter){
+            if ($subs->GROUP_ID ==  $filter){
+                return true;
+            }
+        });
 
         return view('dashboard', [
-            'subs' => $filtered
+            'subs' => $filtered,
+            'groups' => $this->filterOptions
         ]);
     }
     /**
