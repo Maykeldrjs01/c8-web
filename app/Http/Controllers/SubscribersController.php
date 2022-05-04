@@ -61,7 +61,8 @@ class SubscribersController extends Controller
 
         return view('dashboard', [
             'subs' => $filtered,
-            'groups' => $this->filterOptions
+            'groups' => $this->filterOptions,
+            'filter' => $filter
         ]);
     }
     /**

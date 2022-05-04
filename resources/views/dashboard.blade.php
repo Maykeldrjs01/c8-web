@@ -12,7 +12,13 @@
                 <input type="submit" value="Submit">
                 <select name="group">
                     @foreach($groups as $option)
-                    <option value="{{ $option->GROUP_ID }}">{{ $option->GROUP_ID }}</option>
+                    <option value="{{ $option->GROUP_ID }}" 
+                    @isset ( $filter )
+                        @if($option->GROUP_ID == $filter)
+                            selected="true"
+                        @endif
+                    @endisset
+                    >{{ $option->GROUP_ID }}</option>
                     @endforeach
                 </select>
             </form>
