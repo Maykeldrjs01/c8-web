@@ -11,37 +11,42 @@
             <div class="container mx-auto w-full min-h-96 max-h-fit">
                 <div class="flex justify-center items-center h-1/2 pt-10 min-h-full">
                     <!-- Row -->
-                    <div class="w-full xl:w-4/5 lg:w-12/12 flex h-full">
+                    <div class="w-full xl:w-4/5 lg:w-12/12 grid h-full place-items-center">
                         <!-- Col -->
-                        <div id="avatar-container" class="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg" style="background-image: url('https://avatars.dicebear.com/api/adventurer-neutral/calibr8.svg')"></div>
+                        <!-- <div id="avatar-container" class="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg" style="background-image: url('https://avatars.dicebear.com/api/adventurer-neutral/calibr8.svg')"></div> -->
                         <!-- Col -->
                         <div class="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
-                            <form class="px-8 pt-6 pb-8 bg-white rounded">
+
+                            <x-auth-validation-errors class="mb-4 px-8 text-xl" :errors="$errors" />
+
+                            <form class="px-8 pt-6 pb-8 bg-white rounded" method="POST" action="{{ route('subscribers.store') }}">
+                                @csrf
                                 <div class="mb-6">
-                                    <label class="block mb-2 text-sm font-bold text-gray-700" for="name">
+                                    <label class="block mb-2 font-bold text-gray-700" for="name">
                                         Fullname
                                     </label>
-                                    <input class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none number:outline-none focus:shadow-outline" id="name" type="text" placeholder="Johny Doe" onkeydown="changeAvatar(this)"/>
+
+                                    <x-input id="name" class="block mt-1 w-full leading-tight text-gray-700" type="text" name="name" :value="old('name')" placeholder="John Doe" onkeypress="changeAvatar(this)" autofocus/>
                                 </div>
                                 <div class="mb-6">
-                                    <label class="block mb-2 text-sm font-bold text-gray-700" for="number">
+                                    <label class="block mb-2 font-bold text-gray-700" for="number">
                                         Phone Number
                                     </label>
-                                    <input class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="number" type="text" placeholder="09xxxxxxxxx" />
+                                    <x-input id="number" class="block mt-1 w-full leading-tight text-gray-700" type="text" name="number" :value="old('number')" placeholder="09xxxxxxxxx" required/>
                                 </div>
                                 <div class="mb-6">
-                                    <label class="block mb-2 text-sm font-bold text-gray-700" for="group">
+                                    <label class="block mb-2 font-bold text-gray-700" for="group">
                                         Group
                                     </label>
-                                    <select class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline">
-                                        <option selected>Calibr8</option>
-                                        <option>Test Group</option>
+                                    <select class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" name="group">
+                                        <option value="CALIBR8" selected="true">Calibr8</option>
+                                        <option value="TEST">Test</option>
                                     </select>
                                 </div>
-                                <div class="mt-16 mb-0 text-center">
-                                    <button class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline" type="button">
-                                        Add
-                                    </button>
+                                <div class="flex items-center justify-end">
+                                    <x-button>
+                                        Add Subscriber
+                                    </x-button>
                                 </div>
                             </form>
                         </div>

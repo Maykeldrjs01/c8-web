@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BlastSubscribers;
+use App\Http\Requests\CreateSubscriberRequest;
+use Illuminate\Support\Str;
 
 class SubscribersController extends Controller
 {
@@ -27,8 +29,8 @@ class SubscribersController extends Controller
      */
     public function __construct()
     {
-       $this->subs = BlastSubscribers::all(); 
-       $this->subsPaginated = BlastSubscribers::paginate(12); 
+       $this->subs = BlastSubscribers::orderBy('GROUP_ID', 'ASC')->get(); 
+       $this->subsPaginated = BlastSubscribers::orderBy('GROUP_ID', 'ASC')->paginate(12); 
        $this->filterOptions = $this->subs->keyBy('GROUP_ID');
     }
 
@@ -81,9 +83,26 @@ class SubscribersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateSubscriberRequest $request)
     {
         //
+        $request->validate([
+            'name' => 'required',
+            'number' => 'required|numeric|digits:11',
+            'group' => 'required'
+        ]);
+
+        $newRecord = new BlastSubscribers();
+        $newRecord->NAME = $request->name;
+        $newRecord->SUBSCRIBER_NUMBER = $request->number;
+        $newRecord->GROUP_ID = $request->group;
+        $newRecord->TOKEN = Str::random(43);
+        $newRecord->save();
+
+        return view('dashboard',[
+            'subs'=> $this->subsPaginated,
+            'groups' => $this->filterOptions
+        ]); 
     }
 
     /**
