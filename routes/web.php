@@ -32,5 +32,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('subscribers', [SubscribersController::class, 'create'])
     ->name('subscribers.index');
+
+    Route::post('subscribers', [SubscribersController::class, 'store'])
+    ->name('subscribers.store');
 });
 require __DIR__.'/auth.php';
