@@ -72,7 +72,7 @@ class SubscribersController extends Controller
      */
     public function create()
     {
-        //
+        return view('subscribers.index');
     }
 
     /**
