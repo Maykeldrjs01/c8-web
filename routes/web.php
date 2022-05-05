@@ -29,5 +29,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('dashboard/filtered', [SubscribersController::class, 'filters'])
     ->name('dashboard.filters');
+
+    Route::get('subscribers', [SubscribersController::class, 'create'])
+    ->name('subscribers.index');
 });
 require __DIR__.'/auth.php';
