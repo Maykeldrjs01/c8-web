@@ -134,9 +134,23 @@ class SubscribersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($group, $name)
     {
+        $old_name = null;
+        $old_number = null;
+        $records =$this->subs->where('NAME', $name)->where('GROUP_ID', $group);
+
+        foreach ($records as $record) {
+            $old_name = $record->NAME;
+            $old_number = $record->SUBSCRIBER_NUMBER;
+        }
         //
+        return view('subscribers.index',[
+            'record' => $record,
+            'name' => $old_name,
+            'number' => $old_number,
+            'group' => $group
+        ]); 
     }
 
     /**
