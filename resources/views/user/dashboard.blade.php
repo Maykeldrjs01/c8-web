@@ -13,7 +13,7 @@
 
     <div class="py-12">
         <div class="flex flex-col items-center justify-center bg-gray-100 font-sans overflow-hidden">
-            <form method="post" action="{{ route('dashboard.filters') }}">
+            <form method="post" action="{{ route('user.dashboard.filters') }}">
                 @csrf
                 <input type="submit" value="Submit">
                 <select name="group">
@@ -25,7 +25,7 @@
                         >{{ $option->group_id }}</option>
                     @endforeach
                 </select>
-                <a href="{{ route('dashboard.index') }}"> Reset</a>
+                <a href="{{ route('user.dashboard.index') }}"> Reset</a>
             </form>
             <div class="w-full lg:w-4/6">
                 <div class="bg-white shadow-md rounded my-6">
@@ -67,17 +67,9 @@
                                 <td class="py-3 px-6 text-center">
                                     <div class="flex ">
                                         <div class="w-14 mr-0 transform hover:scale-110 transition ease-in-out">
-                                            <form id="subs-edit" method="GET" action="{{ route('subscribers.edit', ['id'=>$subscriber->id]) }}">
+                                            <form id="subs-edit" method="GET" action="{{ route('user.subscribers.view', ['id' => $subscriber->id] ) }}">
                                                 @csrf
-                                                <x-button type="submit" class="transition-transform bg-green-500 hover:bg-green-600 ease-linear duration-500">Edit</x-button>
-                                            </form>
-                                        </div>
-                                        <div class="w-2 ml-5 transform hover:scale-110 transition ease-in-out">
-                                            <form method="POST" action="{{ route('subscribers.delete', ['id'=>$subscriber->id]) }}">
-                                                @method('DELETE')
-                                                @csrf
-                                                <x-button type="submit" class="bg-red-500 hover:bg-red-800" onclick="return confirm('Are you sure?')">Delete
-                                                </x-button>
+                                                <x-button type="submit" class="transition-transform bg-green-500 hover:bg-green-600 ease-linear duration-500">View</x-button>
                                             </form>
                                         </div>
                                     </div>

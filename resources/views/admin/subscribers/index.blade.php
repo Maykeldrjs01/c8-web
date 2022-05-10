@@ -19,9 +19,9 @@
                         <!-- Col -->
                         <div class="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded shadow-lg mb-5">
 
-                            <x-auth-validation-errors class="mb-4 px-8 text-xl" :errors="$errors" />
+                            <!-- <x-auth-validation-errors class="mb-4 px-8 text-xl" :errors="$errors" /> -->
 
-                            <form class="px-8 pt-6 pb-8 bg-white rounded" method="POST" action="{{ route('subscribers.store') }}">
+                            <form class="px-8 pt-6 pb-8 bg-white rounded" method="POST" action="{{ route('admin.subscribers.store') }}">
                                 @csrf
                                 <div class="mb-6">
                                     <label class="block mb-2 font-bold text-gray-700" for="name">
