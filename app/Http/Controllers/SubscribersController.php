@@ -122,9 +122,23 @@ class SubscribersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($group, $name)
     {
-        //
+        $old_name = null;
+        $old_number = null;
+        $records = $this->subs->where('NAME', $name)->where('GROUP_ID', $group);
+
+        foreach ($records as $record) {
+            $old_name = $record->NAME;
+            $old_number = $record->SUBSCRIBER_NUMBER;
+        }
+
+        return view('subscribers.edit',[
+            // 'record' => $record,
+            'name' => $old_name,
+            'number' => $old_number,
+            'group' => $group
+        ]); 
     }
 
     /**
@@ -134,22 +148,37 @@ class SubscribersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($group, $name)
+    public function update(CreateSubscriberRequest $request)
     {
-        $old_name = null;
-        $old_number = null;
-        $records =$this->subs->where('NAME', $name)->where('GROUP_ID', $group);
-
-        foreach ($records as $record) {
-            $old_name = $record->NAME;
-            $old_number = $record->SUBSCRIBER_NUMBER;
-        }
         //
-        return view('subscribers.index',[
-            'record' => $record,
-            'name' => $old_name,
-            'number' => $old_number,
-            'group' => $group
+        $request->validate([
+            'name' => 'required',
+            'number' => 'required|numeric|digits:11',
+            'group' => 'required'
+        ]);
+
+        $old_record = BlastSubscribers::where('NAME', $request->name);
+        dd($old_record->GROUP_ID);
+
+        // $record = $this->subs->firstOrFail(function ($subs) use ($request){
+        //     if ($subs->NAME ==  $request->name && $subs->GROUP_ID ==  $request->group){
+        //         return true;
+        //     }
+        // });
+        // $record->NAME = $request->name;
+        // $record->SUBSCRIBER_NUMBER = $request->number;
+        // $record->GROUP_ID = $request->group;
+        // $record->save();
+
+        // $subscribers->update([
+        //     'NAME' => $request->name,
+        //     'GROUP_ID' => $request->group,
+        //     'SUBSCRIBER_NUMBER' => $request->number
+        // ]);
+
+        return view('dashboard',[
+            'subs'=> $this->subsPaginated,
+            'groups' => $this->filterOptions
         ]); 
     }
 
