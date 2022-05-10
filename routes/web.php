@@ -41,5 +41,8 @@ Route::middleware('auth')->group(function () {
 
     Route::put('subscribers/edit/{id}', [SubscribersController::class, 'update'])
     ->name('subscribers.update');
+
+    Route::delete('subscribers/delete/{id}', [SubscribersController::class, 'destroy'])
+    ->name('subscribers.delete');
 });
 require __DIR__.'/auth.php';

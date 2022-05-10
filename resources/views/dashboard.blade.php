@@ -59,17 +59,20 @@
                                     <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $subscriber->group_id }}</span>
                                 </td>
                                 <td class="py-3 px-6 text-center">
-                                    <div class="flex item-center justify-center">
-                                        <div class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                    <div class="flex ">
+                                        <div class="w-14 mr-0 transform hover:scale-110 transition ease-in-out">
                                             <form id="subs-edit" method="GET" action="{{ route('subscribers.edit', ['id'=>$subscriber->id]) }}">
                                                 @csrf
-                                                <button type="submit">Edit</button>
+                                                <x-button type="submit" class="transition-transform bg-green-500 hover:bg-green-600 ease-linear duration-500">Edit</x-button>
                                             </form>
                                         </div>
-                                        <div class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
+                                        <div class="w-2 ml-5 transform hover:scale-110 transition ease-in-out">
+                                            <form method="POST" action="{{ route('subscribers.delete', ['id'=>$subscriber->id]) }}">
+                                                @method('DELETE')
+                                                @csrf
+                                                <x-button type="submit" class="bg-red-500 hover:bg-red-800" onclick="return confirm('Are you sure?')">Delete
+                                                </x-button>
+                                            </form>
                                         </div>
                                     </div>
                                 </td>
@@ -79,8 +82,10 @@
                     </table>
 
                     <!-- Show the pagination buttons if exists -->
-                    @if (method_exists($subs, 'links'))
-                    {{ $subs->links() }}
+                    <div class="p-5">
+                        @if (method_exists($subs, 'links'))
+                        {{ $subs->links() }}
+                    </div>
                     @endif
                 </div>
             </div>

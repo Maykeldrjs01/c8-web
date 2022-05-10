@@ -30,7 +30,7 @@ class SubscribersController extends Controller
     public function __construct()
     {
        $this->subs = BlastSubscribers::orderBy('group_id', 'ASC')->get(); 
-       $this->subsPaginated = BlastSubscribers::orderBy('group_id', 'ASC')->orderBy('NAME')->paginate(12); 
+       $this->subsPaginated = BlastSubscribers::orderBy('group_id', 'ASC')->orderBy('name')->paginate(12); 
        $this->filterOptions = $this->subs->keyBy('group_id');
     }
 
@@ -94,10 +94,7 @@ class SubscribersController extends Controller
         $newRecord->token = Str::random(43);
         $newRecord->save();
 
-        return view('dashboard',[
-            'subs'=> $this->subsPaginated,
-            'groups' => $this->filterOptions
-        ]); 
+        return redirect()->route('dashboard.index');
     }
 
     /**
@@ -168,6 +165,9 @@ class SubscribersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $record = BlastSubscribers::find($id);
+        $record->delete();
+
+        return redirect()->route('dashboard.index');
     }
 }
