@@ -16,9 +16,9 @@ class BlastSubscribers extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'GROUP_ID',
-        'NAME',
-        'SUBSCRIBER_NUMBER',
-        'TOKEN',
+        'name',
+        'group_id',
+        'subscriber_number',
+        'token',
     ];
 }
