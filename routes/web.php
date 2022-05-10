@@ -36,10 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::post('subscribers', [SubscribersController::class, 'store'])
     ->name('subscribers.store');
 
-    Route::post('subscribers/edit/{group}/{name}', [SubscribersController::class, 'edit'])
+    Route::get('subscribers/edit/{id}', [SubscribersController::class, 'edit'])
     ->name('subscribers.edit');
 
-    Route::put('subscribers/edit/{group}/{name}', [SubscribersController::class, 'update'])
+    Route::put('subscribers/edit/{id}', [SubscribersController::class, 'update'])
     ->name('subscribers.update');
 });
 require __DIR__.'/auth.php';
