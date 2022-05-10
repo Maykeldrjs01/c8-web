@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="">
+    <div>
         <div class="flex flex-col bg-gray-100 font-sans overflow-hidden">
             <!-- Container -->
             <div class="container mx-auto w-full min-h-96 max-h-fit">
@@ -17,7 +17,7 @@
                         <!-- <div id="avatar-container" class="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg" style="background-image: url('https://avatars.dicebear.com/api/adventurer-neutral/calibr8.svg')"></div> -->
 
                         <!-- Col -->
-                        <div class="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
+                        <div class="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded shadow-lg mb-5">
 
                             <x-auth-validation-errors class="mb-4 px-8 text-xl" :errors="$errors" />
 
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="flex items-center justify-end">
                                     <x-button>
-                                        Add Subscriber
+                                        Add
                                     </x-button>
                                 </div>
                             </form>
