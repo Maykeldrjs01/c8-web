@@ -21,7 +21,7 @@
 
                             <x-auth-validation-errors class="mb-4 px-8 text-xl" :errors="$errors" />
 
-                            <form class="px-8 pt-6 pb-8 bg-white rounded" method="POST" action="{{ route('subscribers.update', [ 'name' => $name, 'number' => $number, 'group' => $group ]) }}">
+                            <form class="px-8 pt-6 pb-8 bg-white rounded" method="POST" action="{{ route('subscribers.update', ['id'=>$id]) }}">
                                 @method('PUT')
                                 @csrf
                                 <div class="mb-6">
@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="flex items-center justify-end">
                                     <x-button>
-                                        Add Subscriber
+                                        Update Subscriber
                                     </x-button>
                                 </div>
                             </form>

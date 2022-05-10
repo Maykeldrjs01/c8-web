@@ -28,13 +28,13 @@
                                         Fullname
                                     </label>
 
-                                    <x-input id="name" class="block mt-1 w-full leading-tight text-gray-700" type="text" name="name" :value='""' placeholder="John Doe" autofocus />
+                                    <x-input id="name" class="block mt-1 w-full leading-tight text-gray-700" type="text" name="name" :value="old('name')" placeholder="Johnny Doe" autofocus />
                                 </div>
                                 <div class="mb-6">
                                     <label class="block mb-2 font-bold text-gray-700" for="number">
                                         Phone Number
                                     </label>
-                                    <x-input id="number" class="block mt-1 w-full leading-tight text-gray-700" type="text" name="number" :value='""' placeholder="09xxxxxxxxx" required />
+                                    <x-input id="number" class="block mt-1 w-full leading-tight text-gray-700" type="text" name="number" :value="old('number')" placeholder="09xxxxxxxxx" required />
                                 </div>
                                 <div class="mb-6">
                                     <label class="block mb-2 font-bold text-gray-700" for="group">

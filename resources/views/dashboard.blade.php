@@ -12,15 +12,14 @@
                 <input type="submit" value="Submit">
                 <select name="group">
                     @foreach($groups as $option)
-                    <option value="{{ $option->GROUP_ID }}" 
-                        @isset ( $filter ) 
-                            @if($option->GROUP_ID == $filter)
-                                selected="true"
-                            @endif
+                    <option value="{{ $option->group_id }}" @isset ( $filter ) @if($option->group_id == $filter)
+                        selected="true"
+                        @endif
                         @endisset
-                        >{{ $option->GROUP_ID }}</option>
+                        >{{ $option->group_id }}</option>
                     @endforeach
                 </select>
+                <a href="{{ route('dashboard.index') }}"> Reset</a>
             </form>
             <div class="w-full lg:w-4/6">
                 <div class="bg-white shadow-md rounded my-6">
@@ -42,36 +41,31 @@
                                 <td class="py-3 px-6 text-left">
                                     <div class="flex items-center">
                                         <div class="mr-2">
-                                            <img class="w-10 h-10 rounded-full" src="https://avatars.dicebear.com/api/adventurer-neutral/{{ $subscriber->SUBSCRIBER_NUMBER }}.svg" />
+                                            <img class="w-10 h-10 rounded-full" src="https://avatars.dicebear.com/api/adventurer-neutral/{{ $subscriber->subscriber_number }}.svg" />
                                         </div>
-                                        <span>{{ $subscriber->NAME }}</span>
+                                        <span>{{ $subscriber->name }}</span>
                                     </div>
                                 </td>
 
                                 <!-- Phone Number -->
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <span class="font-medium">(+63) {{ $subscriber->SUBSCRIBER_NUMBER }}</span>
+                                        <span class="font-medium">(+63) {{ $subscriber->subscriber_number }}</span>
                                     </div>
                                 </td>
 
                                 <!-- Group -->
                                 <td class="py-3 px-6 text-center">
-                                    <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $subscriber->GROUP_ID }}</span>
+                                    <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $subscriber->group_id }}</span>
                                 </td>
                                 <td class="py-3 px-6 text-center">
                                     <div class="flex item-center justify-center">
-                                        <form method="post" action="{{ route('subscribers.update', ['group'=>$subscriber->GROUP_ID, 'name'=>$subscriber->NAME]) }}">
-                                            @method('PUT')
-                                            @csrf
-                                            <div class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                                <button type="submit" value=""> Edit
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </form>
+                                        <div class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                            <form id="subs-edit" method="GET" action="{{ route('subscribers.edit', ['id'=>$subscriber->id]) }}">
+                                                @csrf
+                                                <button type="submit">Edit</button>
+                                            </form>
+                                        </div>
                                         <div class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
