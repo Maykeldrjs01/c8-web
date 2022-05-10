@@ -29,9 +29,9 @@ class SubscribersController extends Controller
      */
     public function __construct()
     {
-       $this->subs = BlastSubscribers::orderBy('GROUP_ID', 'ASC')->get(); 
-       $this->subsPaginated = BlastSubscribers::orderBy('GROUP_ID', 'ASC')->paginate(12); 
-       $this->filterOptions = $this->subs->keyBy('GROUP_ID');
+       $this->subs = BlastSubscribers::orderBy('group_id', 'ASC')->get(); 
+       $this->subsPaginated = BlastSubscribers::orderBy('group_id', 'ASC')->orderBy('NAME')->paginate(12); 
+       $this->filterOptions = $this->subs->keyBy('group_id');
     }
 
     /**
@@ -56,7 +56,7 @@ class SubscribersController extends Controller
     {
         $filter = $request->group;
         $filtered = $this->subs->filter(function ($subs) use ($filter){
-            if ($subs->GROUP_ID ==  $filter){
+            if ($subs->group_id ==  $filter){
                 return true;
             }
         });
@@ -85,18 +85,13 @@ class SubscribersController extends Controller
      */
     public function store(CreateSubscriberRequest $request)
     {
-        //
-        $request->validate([
-            'name' => 'required',
-            'number' => 'required|numeric|digits:11',
-            'group' => 'required'
-        ]);
+        $request->validated();
 
         $newRecord = new BlastSubscribers();
-        $newRecord->NAME = $request->name;
-        $newRecord->SUBSCRIBER_NUMBER = $request->number;
-        $newRecord->GROUP_ID = $request->group;
-        $newRecord->TOKEN = Str::random(43);
+        $newRecord->name = $request->name;
+        $newRecord->subscriber_number = $request->number;
+        $newRecord->group_id = $request->group;
+        $newRecord->token = Str::random(43);
         $newRecord->save();
 
         return view('dashboard',[
@@ -122,22 +117,21 @@ class SubscribersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($group, $name)
+    public function edit($id)
     {
-        $old_name = null;
-        $old_number = null;
-        $records = $this->subs->where('NAME', $name)->where('GROUP_ID', $group);
+        /**
+         * find record using the primary key
+         * then pass the data to the edit form
+         */
+        $record = BlastSubscribers::find($id);
 
-        foreach ($records as $record) {
-            $old_name = $record->NAME;
-            $old_number = $record->SUBSCRIBER_NUMBER;
-        }
+        $old_name = $record->name;
+        $old_number = $record->subscriber_number;
 
         return view('subscribers.edit',[
-            // 'record' => $record,
             'name' => $old_name,
             'number' => $old_number,
-            'group' => $group
+            'id' => $record->id
         ]); 
     }
 
@@ -148,38 +142,22 @@ class SubscribersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CreateSubscriberRequest $request)
+    public function update(CreateSubscriberRequest $request, $id)
     {
-        //
-        $request->validate([
-            'name' => 'required',
-            'number' => 'required|numeric|digits:11',
-            'group' => 'required'
-        ]);
+        $record = BlastSubscribers::find($id);
 
-        $old_record = BlastSubscribers::where('NAME', $request->name);
-        dd($old_record->GROUP_ID);
+        if($record){
+            $record->name = $request->name;
+            $record->group_id = $request->group;
+            $record->subscriber_number = $request->number;
+            $record->save();
+        }
 
-        // $record = $this->subs->firstOrFail(function ($subs) use ($request){
-        //     if ($subs->NAME ==  $request->name && $subs->GROUP_ID ==  $request->group){
-        //         return true;
-        //     }
-        // });
-        // $record->NAME = $request->name;
-        // $record->SUBSCRIBER_NUMBER = $request->number;
-        // $record->GROUP_ID = $request->group;
-        // $record->save();
-
-        // $subscribers->update([
-        //     'NAME' => $request->name,
-        //     'GROUP_ID' => $request->group,
-        //     'SUBSCRIBER_NUMBER' => $request->number
-        // ]);
-
-        return view('dashboard',[
-            'subs'=> $this->subsPaginated,
-            'groups' => $this->filterOptions
-        ]); 
+        // return view('dashboard',[
+        //     'subs'=> $this->subsPaginated,
+        //     'groups' => $this->filterOptions
+        // ]); 
+        return redirect()->route('dashboard.index');
     }
 
     /**
