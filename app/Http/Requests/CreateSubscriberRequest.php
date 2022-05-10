@@ -25,9 +25,8 @@ class CreateSubscriberRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'number' => 'required|numeric|digits:11',
+            'number' => ['bail', 'required', 'regex:/(9)[0-9]{9}/', 'max:10'],
             'group' => 'required'
-            //
         ];
     }
 }
