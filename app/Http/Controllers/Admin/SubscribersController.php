@@ -1,32 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BlastSubscribers;
 use App\Http\Requests\CreateSubscriberRequest;
 use Illuminate\Support\Str;
-
+use RealRashid\SweetAlert\Facades\Alert;
 class SubscribersController extends Controller
 {
-    /**
-     * collection of subscribers to be used
-     * in app
-     */
     private $subs;
     private $filterOptions;
     private $subsPaginated;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-    /**
-     * Add the subs collection with pagination
-     * upon calling the controller
-     */
     public function __construct()
     {
        $this->subs = BlastSubscribers::orderBy('group_id', 'ASC')->get(); 
@@ -40,9 +27,7 @@ class SubscribersController extends Controller
      */
     public function index()
     {
-        //
-        // dd($this->subs->keyBy('GROUP_ID'));
-        return view('dashboard',[
+        return view('admin.dashboard',[
             'subs'=> $this->subsPaginated,
             'groups' => $this->filterOptions
         ]); 
@@ -60,13 +45,15 @@ class SubscribersController extends Controller
                 return true;
             }
         });
-
-        return view('dashboard', [
+        Alert::toast('Filter applied!', 'info');
+        return view('admin.dashboard', [
             'subs' => $filtered,
             'groups' => $this->filterOptions,
             'filter' => $filter
         ]);
+        
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -74,18 +61,15 @@ class SubscribersController extends Controller
      */
     public function create()
     {
-        return view('subscribers.index');
+        return view('admin.subscribers.index');
     }
 
-    /**
+   /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(CreateSubscriberRequest $request)
     {
-        $request->validated();
 
         $newRecord = new BlastSubscribers();
         $newRecord->name = $request->name;
@@ -94,25 +78,12 @@ class SubscribersController extends Controller
         $newRecord->token = Str::random(43);
         $newRecord->save();
 
-        return redirect()->route('dashboard.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->route('admin.dashboard.index')->with('toast_success', 'Subscriber added successfully!');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
@@ -124,10 +95,12 @@ class SubscribersController extends Controller
 
         $old_name = $record->name;
         $old_number = $record->subscriber_number;
+        $old_group = $record->group_id;
 
-        return view('subscribers.edit',[
+        return view('admin.subscribers.edit',[
             'name' => $old_name,
             'number' => $old_number,
+            'group' => $old_group,
             'id' => $record->id
         ]); 
     }
@@ -135,9 +108,6 @@ class SubscribersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(CreateSubscriberRequest $request, $id)
     {
@@ -150,24 +120,18 @@ class SubscribersController extends Controller
             $record->save();
         }
 
-        // return view('dashboard',[
-        //     'subs'=> $this->subsPaginated,
-        //     'groups' => $this->filterOptions
-        // ]); 
-        return redirect()->route('dashboard.index');
+        return redirect()->route('admin.dashboard.index')->with('toast_success', 'Subscriber updated successfully!') ;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $record = BlastSubscribers::find($id);
         $record->delete();
 
-        return redirect()->route('dashboard.index');
+        return redirect()->route('admin.dashboard.index')->with('toast_success', 'Subscriber removed successfully!') ;
     }
 }
