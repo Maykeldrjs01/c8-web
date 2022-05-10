@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SubscribersController;
+use App\Http\Controllers\Admin\SubscribersController as AdminSubsController;
+use App\Http\Controllers\User\SubscribersController as UserSubsController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,31 +20,82 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-// Route::get('/test', );
+Route::get('/home',[LoginController::class, 'index'])->middleware('auth');
+
+// Route::middleware('auth')->group(function () {
+
+//     Route::get('dashboard', [SubscribersController::class, 'index'])
+//     ->name('dashboard.index');
+
+//     Route::post('dashboard/filtered', [SubscribersController::class, 'filters'])
+//     ->name('dashboard.filters');
+
+//     Route::get('subscribers', [SubscribersController::class, 'create'])
+//     ->name('subscribers.index');
+
+//     Route::post('subscribers', [SubscribersController::class, 'store'])
+//     ->name('subscribers.store');
+
+//     Route::get('subscribers/edit/{id}', [SubscribersController::class, 'edit'])
+//     ->name('subscribers.edit');
+
+//     Route::put('subscribers/edit/{id}', [SubscribersController::class, 'update'])
+//     ->name('subscribers.update');
+
+//     Route::delete('subscribers/delete/{id}', [SubscribersController::class, 'destroy'])
+//     ->name('subscribers.delete');
+// });
 
 
+Route::group(['middleware' => 'auth'], function(){
 
-Route::middleware('auth')->group(function () {
+    /**
+     * Group the admin privileges with the is_admin middleware
+     */
 
-    Route::get('dashboard', [SubscribersController::class, 'index'])
-    ->name('dashboard.index');
+    Route::group(['prefix' => 'admin', 'middleware' => 'is_admin', 'as' => 'admin.'],
+        function () {
+            Route::get('/dashboard', [AdminSubsController::class, 'index'])
+            ->name('dashboard.index');
 
-    Route::post('dashboard/filtered', [SubscribersController::class, 'filters'])
-    ->name('dashboard.filters');
+            Route::post('/dashboard/filtered', [AdminSubsController::class, 'filters'])
+            ->name('dashboard.filters');
 
-    Route::get('subscribers', [SubscribersController::class, 'create'])
-    ->name('subscribers.index');
+            Route::get('/subscribers', [AdminSubsController::class, 'create'])
+            ->name('subscribers.index');
 
-    Route::post('subscribers', [SubscribersController::class, 'store'])
-    ->name('subscribers.store');
+            Route::post('/subscribers', [AdminSubsController::class, 'store'])
+            ->name('subscribers.store');
 
-    Route::get('subscribers/edit/{id}', [SubscribersController::class, 'edit'])
-    ->name('subscribers.edit');
+            Route::get('/subscribers/edit/{id}', [AdminSubsController::class, 'edit'])
+            ->name('subscribers.edit');
 
-    Route::put('subscribers/edit/{id}', [SubscribersController::class, 'update'])
-    ->name('subscribers.update');
+            Route::put('/subscribers/edit/{id}', [AdminSubsController::class, 'update'])
+            ->name('subscribers.update');
 
-    Route::delete('subscribers/delete/{id}', [SubscribersController::class, 'destroy'])
-    ->name('subscribers.delete');
+            Route::delete('/subscribers/delete/{id}', [AdminSubsController::class, 'destroy'])
+            ->name('subscribers.delete');
+        }
+    );
+
+    /**
+     * User group privileges and accessible
+     */
+
+    Route::group(['prefix' => 'user', 'as' => 'user.'],
+        function () {
+            Route::get('/dashboard', [UserSubsController::class, 'index'])
+            ->name('dashboard.index');
+
+            Route::post('/dashboard/filtered', [UserSubsController::class, 'filters'])
+            ->name('dashboard.filters');
+
+            Route::get('/subscribers/view/{id}', [UserSubsController::class, 'show'])
+            ->name('subscribers.view');
+        }
+    );
 });
+
+
+
 require __DIR__.'/auth.php';
