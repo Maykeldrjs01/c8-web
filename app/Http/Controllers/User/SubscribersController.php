@@ -15,9 +15,12 @@ class SubscribersController extends Controller
 
     public function __construct()
     {
-       $this->subs = BlastSubscribers::orderBy('group_id', 'ASC')->get(); 
-       $this->subsPaginated = BlastSubscribers::orderBy('group_id', 'ASC')->orderBy('name')->paginate(12); 
-       $this->filterOptions = $this->subs->keyBy('group_id');
+       $this->subs = BlastSubscribers::orderBy('GROUP_ID', 'ASC')
+            ->get(); 
+       $this->subsPaginated = BlastSubscribers::orderBy('GROUP_ID', 'ASC')
+            ->orderBy('NAME')
+            ->paginate(12); 
+       $this->filterOptions = $this->subs->keyBy('GROUP_ID');
     }
 
     /**
@@ -40,7 +43,7 @@ class SubscribersController extends Controller
     {
         $filter = $request->group;
         $filtered = $this->subs->filter(function ($subs) use ($filter){
-            if ($subs->group_id ==  $filter){
+            if ($subs->GROUP_ID ==  $filter){
                 return true;
             }
         });
@@ -57,22 +60,23 @@ class SubscribersController extends Controller
      * Show the form for editing the specified resource.
      *
      */
-    public function show($id){
+    public function show(Request $request){
         /**
          * find record using the primary key
          * then pass the data to the edit form
          */
-        $record = BlastSubscribers::find($id);
+        $record = BlastSubscribers::where('NAME', $request->name)
+            ->where('GROUP_ID', $request->group_id)
+            ->first();
 
-        $old_name = $record->name;
-        $old_number = $record->subscriber_number;
-        $old_group = $record->group_id;
+        $old_name = $record->NAME;
+        $old_number = $record->SUBSCRIBER_NUMBER;
+        $old_group = $record->GROUP_ID;
 
-        return view('user.subscribers.edit', [
+        return view('user.subscribers.edit',[
             'name' => $old_name,
             'number' => $old_number,
             'group' => $old_group,
-            'id' => $record->id
         ]); 
     }
 }
