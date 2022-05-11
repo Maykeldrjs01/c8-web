@@ -20,7 +20,7 @@
 
                         <!-- <x-auth-validation-errors class="mb-4 px-8 text-xl" :errors="$errors" /> -->
 
-                        <form class="px-8 pt-6 pb-8 bg-white rounded" method="POST" action="{{ route('admin.subscribers.update', ['id'=>$id]) }}">
+                        <form class="px-8 pt-6 pb-8 bg-white rounded" method="POST" action="{{ route('admin.subscribers.update', [$name, $group]) }}">
                             @method('PUT')
                             @csrf
                             <div class="mb-6">
@@ -28,22 +28,22 @@
                                     Fullname
                                 </label>
 
+                                <!-- Name input -->
                                 <x-input id="name" class="block mt-1 w-full leading-tight text-gray-700" type="text" name="name" :value="$name" placeholder="Johnny Doe" autofocus />
                             </div>
                             <div class="mb-6">
                                 <label class="block mb-2 font-bold text-gray-700" for="number">
                                     Phone Number
                                 </label>
-                                <x-input id="number" class="block mt-1 w-full leading-tight text-gray-700" type="text" name="number" :value="$number" placeholder="09xxxxxxxxx" required />
+                                <!-- Phone number input -->
+                                <x-input id="number" class="block mt-1 w-full leading-tight text-gray-700" type="text" name="number" :value="$number" placeholder="9xxxxxxxxx" required />
                             </div>
                             <div class="mb-6">
                                 <label class="block mb-2 font-bold text-gray-700" for="group">
-                                    Group
+                                    Group ID
                                 </label>
-                                <select class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" name="group">
-                                    <option value="CALIBR8" selected="true">Calibr8</option>
-                                    <option value="TEST">Test</option>
-                                </select>
+                                <!-- Group input -->
+                                <x-input id="group" class="block mt-1 w-full leading-tight text-gray-700" type="text" name="group" :value="$group" placeholder="" required />
                             </div>
                             <div class="flex items-center justify-end">
                                 <x-button>

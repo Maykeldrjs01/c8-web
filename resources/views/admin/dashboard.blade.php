@@ -95,6 +95,9 @@
                                             <form method="POST" action="{{ route('admin.subscribers.delete') }}">
                                                 @method('DELETE')
                                                 @csrf
+                                                <!-- Hidden input for form submission (NO NEED TO CHANGE THE LAYOUT) -->
+                                                <input type="hidden" name="name" value="{{ $subscriber->NAME }}">
+                                                <input type="hidden" name="group_id" value="{{ $subscriber->GROUP_ID }}">
                                                 <!-- Delete button -->
                                                 <x-button type="submit" class="bg-red-500 hover:bg-red-800" onclick="return confirm('This action cannot be undone. Are you sure?')">
                                                     Delete

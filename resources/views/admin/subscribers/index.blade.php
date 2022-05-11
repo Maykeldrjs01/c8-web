@@ -38,12 +38,9 @@
                                 </div>
                                 <div class="mb-6">
                                     <label class="block mb-2 font-bold text-gray-700" for="group">
-                                        Group
+                                        Group ID
                                     </label>
-                                    <select class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" name="group">
-                                        <option value="CALIBR8" selected="true">Calibr8</option>
-                                        <option value="TEST">Test</option>
-                                    </select>
+                                    <x-input id="group" class="block mt-1 w-full leading-tight text-gray-700" type="text" name="group" :value="old('group')" placeholder="CALIBR8" required />
                                 </div>
                                 <div class="flex items-center justify-end">
                                     <x-button>

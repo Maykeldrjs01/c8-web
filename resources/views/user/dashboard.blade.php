@@ -15,17 +15,25 @@
         <div class="flex flex-col items-center justify-center bg-gray-100 font-sans overflow-hidden">
             <form method="post" action="{{ route('user.dashboard.filters') }}">
                 @csrf
+                <!-- Reset button -->
+                <a href="{{ route('user.dashboard.index') }}"> Reset</a>
+                <!-- Submit filter button -->
                 <input type="submit" value="Submit">
+                <!-- Dropdown filters button -->
                 <select name="group">
+                    <option disabled selected>-- Select Group --</option>
                     @foreach($groups as $option)
-                    <option value="{{ $option->group_id }}" @isset ( $filter ) @if($option->group_id == $filter)
+                    @if(isset($filter))
+
+                    <option value="{{ $option->GROUP_ID }}" @if($option->GROUP_ID == $filter)
                         selected="true"
                         @endif
-                        @endisset
-                        >{{ $option->group_id }}</option>
+                        >{{ $option->GROUP_ID }}</option>
+                    @else
+                    <option value="{{ $option->GROUP_ID }}">{{ $option->GROUP_ID }}</option>
+                    @endif
                     @endforeach
                 </select>
-                <a href="{{ route('user.dashboard.index') }}"> Reset</a>
             </form>
             <div class="w-full lg:w-4/6">
                 <div class="bg-white shadow-md rounded my-6">
@@ -35,7 +43,6 @@
                                 <th class="py-3 px-6 text-left">Name</th>
                                 <th class="py-3 px-6 text-left">Phone Number</th>
                                 <th class="py-3 px-6 text-center">Group</th>
-                                <th class="py-3 px-6 text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
@@ -47,32 +54,22 @@
                                 <td class="py-3 px-6 text-left">
                                     <div class="flex items-center">
                                         <div class="mr-2">
-                                            <img class="w-10 h-10 rounded-full" src="https://avatars.dicebear.com/api/adventurer-neutral/{{ $subscriber->subscriber_number }}.svg" />
+                                            <img class="w-10 h-10 rounded-full" src="https://avatars.dicebear.com/api/adventurer-neutral/{{ $subscriber->SUBSCRIBER_NUMBER }}.svg" />
                                         </div>
-                                        <span>{{ $subscriber->name }}</span>
+                                        <span>{{ $subscriber->NAME }}</span>
                                     </div>
                                 </td>
 
                                 <!-- Phone Number -->
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <span class="font-medium">(+63) {{ $subscriber->subscriber_number }}</span>
+                                        <span class="font-medium">(+63) {{ $subscriber->SUBSCRIBER_NUMBER }}</span>
                                     </div>
                                 </td>
 
                                 <!-- Group -->
                                 <td class="py-3 px-6 text-center">
-                                    <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $subscriber->group_id }}</span>
-                                </td>
-                                <td class="py-3 px-6 text-center">
-                                    <div class="flex ">
-                                        <div class="w-14 mr-0 transform hover:scale-110 transition ease-in-out">
-                                            <form id="subs-edit" method="GET" action="{{ route('user.subscribers.view', ['id' => $subscriber->id] ) }}">
-                                                @csrf
-                                                <x-button type="submit" class="transition-transform bg-green-500 hover:bg-green-600 ease-linear duration-500">View</x-button>
-                                            </form>
-                                        </div>
-                                    </div>
+                                    <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $subscriber->GROUP_ID }}</span>
                                 </td>
                             </tr>
                             @endforeach
