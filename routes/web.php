@@ -22,30 +22,6 @@ Route::get('/', function () {
 
 Route::get('/home',[LoginController::class, 'index'])->middleware('auth');
 
-// Route::middleware('auth')->group(function () {
-
-//     Route::get('dashboard', [SubscribersController::class, 'index'])
-//     ->name('dashboard.index');
-
-//     Route::post('dashboard/filtered', [SubscribersController::class, 'filters'])
-//     ->name('dashboard.filters');
-
-//     Route::get('subscribers', [SubscribersController::class, 'create'])
-//     ->name('subscribers.index');
-
-//     Route::post('subscribers', [SubscribersController::class, 'store'])
-//     ->name('subscribers.store');
-
-//     Route::get('subscribers/edit/{id}', [SubscribersController::class, 'edit'])
-//     ->name('subscribers.edit');
-
-//     Route::put('subscribers/edit/{id}', [SubscribersController::class, 'update'])
-//     ->name('subscribers.update');
-
-//     Route::delete('subscribers/delete/{id}', [SubscribersController::class, 'destroy'])
-//     ->name('subscribers.delete');
-// });
-
 
 Route::group(['middleware' => 'auth'], function(){
 
@@ -67,19 +43,19 @@ Route::group(['middleware' => 'auth'], function(){
             Route::post('/subscribers', [AdminSubsController::class, 'store'])
             ->name('subscribers.store');
 
-            Route::get('/subscribers/edit/{id}', [AdminSubsController::class, 'edit'])
+            Route::post('/subscribers/edit', [AdminSubsController::class, 'edit'])
             ->name('subscribers.edit');
 
-            Route::put('/subscribers/edit/{id}', [AdminSubsController::class, 'update'])
+            Route::put('/subscribers/edit', [AdminSubsController::class, 'update'])
             ->name('subscribers.update');
 
-            Route::delete('/subscribers/delete/{id}', [AdminSubsController::class, 'destroy'])
+            Route::delete('/subscribers/delete', [AdminSubsController::class, 'destroy'])
             ->name('subscribers.delete');
         }
     );
 
     /**
-     * User group privileges and accessible
+     * User group privileges and accessibles
      */
 
     Route::group(['prefix' => 'user', 'as' => 'user.'],
