@@ -16,9 +16,9 @@ class SubscribersController extends Controller
 
     public function __construct()
     {
-       $this->subs = BlastSubscribers::orderBy('group_id', 'ASC')->get(); 
-       $this->subsPaginated = BlastSubscribers::orderBy('group_id', 'ASC')->orderBy('name')->paginate(12); 
-       $this->filterOptions = $this->subs->keyBy('group_id');
+       $this->subs = BlastSubscribers::orderBy('GROUP_ID', 'ASC')->get(); 
+       $this->subsPaginated = BlastSubscribers::orderBy('GROUP_ID', 'ASC')->orderBy('name')->paginate(12); 
+       $this->filterOptions = $this->subs->keyBy('GROUP_ID');
     }
 
     /**
@@ -41,7 +41,7 @@ class SubscribersController extends Controller
     {
         $filter = $request->group;
         $filtered = $this->subs->filter(function ($subs) use ($filter){
-            if ($subs->group_id ==  $filter){
+            if ($subs->GROUP_ID ==  $filter){
                 return true;
             }
         });
@@ -72,10 +72,10 @@ class SubscribersController extends Controller
     {
 
         $newRecord = new BlastSubscribers();
-        $newRecord->name = $request->name;
-        $newRecord->subscriber_number = $request->number;
-        $newRecord->group_id = $request->group;
-        $newRecord->token = Str::random(43);
+        $newRecord->NAME = $request->name;
+        $newRecord->SUBSCRIBER_NUMBER = $request->number;
+        $newRecord->GROUP_ID = $request->group;
+        $newRecord->TOKEN = Str::random(43);
         $newRecord->save();
 
         return redirect()->route('admin.dashboard.index')->with('toast_success', 'Subscriber added successfully!');
@@ -85,17 +85,17 @@ class SubscribersController extends Controller
      * Show the form for editing the specified resource.
      *
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
         /**
          * find record using the primary key
          * then pass the data to the edit form
          */
-        $record = BlastSubscribers::find($id);
+        $record = BlastSubscribers::where('NAME', $request->name)->where('GROUP_ID', $request->group_id)->first();
 
-        $old_name = $record->name;
-        $old_number = $record->subscriber_number;
-        $old_group = $record->group_id;
+        $old_name = $record->NAME;
+        $old_number = $record->SUBSCRIBER_NUMBER;
+        $old_group = $record->GROUP_ID;
 
         return view('admin.subscribers.edit',[
             'name' => $old_name,
@@ -114,9 +114,9 @@ class SubscribersController extends Controller
         $record = BlastSubscribers::find($id);
 
         if($record){
-            $record->name = $request->name;
-            $record->group_id = $request->group;
-            $record->subscriber_number = $request->number;
+            $record->NAME = $request->name;
+            $record->GROUP_ID = $request->group;
+            $record->SUBSCRIBER_NUMBER = $request->number;
             $record->save();
         }
 
@@ -127,9 +127,9 @@ class SubscribersController extends Controller
      * Remove the specified resource from storage.
      *
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $record = BlastSubscribers::find($id);
+        $record = BlastSubscribers::where('NAME', $request->name)->where('GROUP_ID', $request->group_id)->first();
         $record->delete();
 
         return redirect()->route('admin.dashboard.index')->with('toast_success', 'Subscriber removed successfully!') ;
