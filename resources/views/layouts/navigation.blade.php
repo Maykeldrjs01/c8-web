@@ -5,9 +5,15 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
+                    @if (auth()->user()->is_admin)
                     <a href="{{ route('admin.dashboard.index') }}">
                         <x-application-logo class="block h-10 w-auto fill-current text-white" />
                     </a>
+                    @else
+                    <a href="{{ route('user.dashboard.index') }}">
+                        <x-application-logo class="block h-10 w-auto fill-current text-white" />
+                    </a>
+                    @endif
                 </div>
 
                 <!-- Navigation Links -->
@@ -22,9 +28,6 @@
                     @else
                     <x-nav-link :href="route('user.dashboard.index')" :active="request()->routeIs('user.dashboard.*')">
                         {{ __('Dashboard') }}
-                    </x-nav-link>
-                    <x-nav-link :active="request()->routeIs('user.subscribers.*')">
-                        {{ __('Subscribers') }}
                     </x-nav-link>
                     @endif
                 </div>
