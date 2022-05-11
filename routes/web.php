@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth'], function(){
             Route::post('/subscribers/edit', [AdminSubsController::class, 'edit'])
             ->name('subscribers.edit');
 
-            Route::put('/subscribers/edit', [AdminSubsController::class, 'update'])
+            Route::put('/subscribers/update/{name}/{group}', [AdminSubsController::class, 'update'])
             ->name('subscribers.update');
 
             Route::delete('/subscribers/delete', [AdminSubsController::class, 'destroy'])
@@ -66,7 +66,7 @@ Route::group(['middleware' => 'auth'], function(){
             Route::post('/dashboard/filtered', [UserSubsController::class, 'filters'])
             ->name('dashboard.filters');
 
-            Route::get('/subscribers/view/{id}', [UserSubsController::class, 'show'])
+            Route::get('/subscribers/view/', [UserSubsController::class, 'show'])
             ->name('subscribers.view');
         }
     );
