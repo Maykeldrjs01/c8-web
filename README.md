@@ -36,17 +36,17 @@ The project is a simple record management system intended for the EDC in Calibr8
  composer install
  ```
 
- **Step 3.** If the above command throws an error, you may use this:
+If the above command throws an error, you may use this:
 
  ```bash
  composer install --ignore-platform-reqs
  ```
 
- **Step 4.** Next is to create a copy of *.env.example* with the name *.env*.
+ **Step 3.** Next is to create a copy of *.env.example* with the name *.env*.
 
- **Step 5.** Open the file and change the *DB* to match your MySQL credentials.
+ **Step 4.** Open the file and change the *DB* to match your MySQL credentials.
 
- **Step 6.** Run the following commands for seting up the project.
+ **Step 5.** Run the following commands for seting up the project.
 
  ```bash
  php artisan key:generate
