@@ -9,57 +9,92 @@
 </p>
 
 
-## About Laravel
+## About the Project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The project is a simple record management system intended for the EDC in Calibr8 Systems Inc.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Requirements 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+*Please ensure you have the latest versions*
+- PHP
+- Composer
+- Nodejs
+- MySQL
+- Docker *(Optional)*
 
-## Learning Laravel
+## Installing without Docker
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+ **Step 1.** Clone this repository and cd into the project folder.
+ ```bash
+ git clone https://github.com/beemerproj/c8-web.git
+ cd c8-web/
+ ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+ **Step 2.** Next is to install the dependencies using composer.
 
-## Laravel Sponsors
+ ```bash
+ composer install
+ ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+ **Step 3.** If the above command throws an error, you may use this:
 
-### Premium Partners
+ ```bash
+ composer install --ignore-platform-reqs
+ ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+ **Step 4.** Next is to create a copy of *.env.example* with the name *.env*.
 
-## Contributing
+ **Step 5.** Open the file and change the *DB* to match your MySQL credentials.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+ **Step 6.** Run the following commands for seting up the project.
 
-## Code of Conduct
+ ```bash
+ php artisan key:generate
+ php artisan config:clear
+ php artisan migrate
+ php artisan db:seed --class=AdminSeeder
+ php artisan serve
+ ```
+ And you are done!
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+ You can check if the web-app is running by browsing using this:
+ ```
+ localhost/c8-web/public/
+ ``` 
+## Installing with Laravel Sail (Docker)
 
-## Security Vulnerabilities
+Laravel Framework uses the **Laravel Sail** for easier interaction with docker. To read more about Laravel Sail, [click here.](https://laravel.com/docs/9.x/sail)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+ **Step 1.** Clone this repository and cd into the project folder.
+ ```bash
+ git clone https://github.com/beemerproj/c8-web.git
+ cd c8-web/
+ ```
+
+ **Step 2.** Run this command to install the composer dependencies provided in the laravel documentation. 
+ [Read more](https://laravel.com/docs/9.x/sail#installing-composer-dependencies-for-existing-projects)
+ ```bash
+ docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v $(pwd):/var/www/html \
+    -w /var/www/html \
+    laravelsail/php81-composer:latest \
+    composer install --ignore-platform-reqs
+ ```
+ **Step 3.** Next is to create a copy of *.env.example* with the name *.env*.
+
+ **Step 4.** Open the file and change the *DB* to match your MySQL credentials.
+
+ **Step 5.** Finally, you may start Laravel Sail with this command:
+ ```bash
+ ./vendor/bin/sail up
+ ```
+ You can check if the web-app is running by browsing using this:
+ ```
+ localhost/
+ ``` 
+<!-- Coming Soon. Too Lazy to add -->
+<!-- ## Troubleshooting -->
 
 ## License
 
