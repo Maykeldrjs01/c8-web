@@ -59,7 +59,7 @@ If the above command throws an error, you may use this:
 
  You can check if the web-app is running by browsing using this:
  ```
- localhost/c8-web/public/
+ http://localhost/c8-web/public/
  ``` 
 ## Installing with Laravel Sail (Docker)
 
@@ -91,7 +91,7 @@ Laravel Framework uses the **Laravel Sail** for easier interaction with docker. 
  ```
  You can check if the web-app is running by browsing using this:
  ```
- localhost/
+ http://localhost/
  ``` 
 <!-- Coming Soon. Too Lazy to add -->
 <!-- ## Troubleshooting -->
