@@ -13,27 +13,34 @@
 
     <div class="py-12">
         <div class="flex flex-col items-center justify-center bg-gray-100 font-sans overflow-hidden">
-            <form method="post" action="{{ route('user.dashboard.filters') }}">
+            <!-- Filter section -->
+            <form method="POST" action="{{ route('admin.dashboard.filters') }}" class="">
                 @csrf
-                <!-- Reset button -->
-                <a href="{{ route('user.dashboard.index') }}"> Reset</a>
-                <!-- Submit filter button -->
-                <input type="submit" value="Submit">
-                <!-- Dropdown filters button -->
-                <select name="group">
-                    <option disabled selected>-- Select Group --</option>
-                    @foreach($groups as $option)
-                    @if(isset($filter))
+                <div class="flex flex-row w-full mt-1">
+                    <p class="place-items-center mr-2 text-lg font-black text-gray-800 flex">Filter Table <span class="ml-3 font-black text-4xl text-gray-300">|</span></p>
 
-                    <option value="{{ $option->GROUP_ID }}" @if($option->GROUP_ID == $filter)
-                        selected="true"
+                    <!-- Reset button -->
+                    <a href="{{ route('admin.dashboard.index') }}" class="flex justify-center content-center w-32 rounded-md border border-gray-300 shadow-sm py-3 bg-red-600 text-sm font-bold text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 mr-4">Reset</a>
+
+                    <!-- Submit filter button -->
+                    <input type="submit" value="Submit" class="flex justify-center w-32 rounded-md border border-gray-300 shadow-sm bg-blue-400 text-sm font-bold text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-sky-500">
+
+                    <!-- Dropdown filters button -->
+                    <select name="group" class="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-bold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-primary ml-1" require>
+                        <option disabled selected>Select Group</option>
+                        @foreach($groups as $option)
+                        @if(isset($filter))
+
+                        <option value="{{ $option->GROUP_ID }}" @if($option->GROUP_ID == $filter)
+                            selected="true"
+                            @endif
+                            >{{ $option->GROUP_ID }}</option>
+                        @else
+                        <option value="{{ $option->GROUP_ID }}">{{ $option->GROUP_ID }}</option>
                         @endif
-                        >{{ $option->GROUP_ID }}</option>
-                    @else
-                    <option value="{{ $option->GROUP_ID }}">{{ $option->GROUP_ID }}</option>
-                    @endif
-                    @endforeach
-                </select>
+                        @endforeach
+                    </select>
+                </div>
             </form>
             <div class="w-full lg:w-4/6">
                 <div class="bg-white shadow-md rounded my-6">
