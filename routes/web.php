@@ -37,6 +37,9 @@ Route::group(['middleware' => 'auth'], function(){
             Route::post('/dashboard/filtered', [AdminSubsController::class, 'filters'])
             ->name('dashboard.filters');
 
+           Route::post('/dashboard/groups/', [AdminSubsController::class, 'showGroup'])
+            ->name('dashboard.groups');
+
             Route::get('/subscribers', [AdminSubsController::class, 'create'])
             ->name('subscribers.index');
 
@@ -65,6 +68,9 @@ Route::group(['middleware' => 'auth'], function(){
 
             Route::post('/dashboard/filtered', [UserSubsController::class, 'filters'])
             ->name('dashboard.filters');
+
+           Route::post('/dashboard/groups/', [AdminSubsController::class, 'showGroup'])
+            ->name('dashboard.groups');
 
             Route::get('/subscribers/view/', [UserSubsController::class, 'show'])
             ->name('subscribers.view');
