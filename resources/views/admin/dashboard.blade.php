@@ -44,6 +44,9 @@
             </form>
             <!-- End filer section -->
 
+            <x-modal />
+
+            <!-- Table -->
             <div class="w-full lg:w-4/6">
                 <div class="bg-white shadow-md rounded my-6">
                     <table class="min-w-max w-full table-auto">
@@ -59,29 +62,30 @@
 
                             <!-- Display all information about the subscribers in the table -->
                             @foreach($subs as $subscriber)
-                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <tr class="border-b border-gray-200 hover:bg-gray-100" onclick="openModal('{{ $subscriber->NAME }}','{{ $subscriber->SUBSCRIBER_NUMBER }}')">
                                 <!-- Name -->
-                                <td class="py-3 px-6 text-left">
-                                    <div class="flex items-center">
-                                        <div class="mr-2">
-                                            <img class="w-10 h-10 rounded-full" src="https://avatars.dicebear.com/api/adventurer-neutral/{{ $subscriber->SUBSCRIBER_NUMBER }}.svg" />
+                                <div onclick="openModal()">
+                                    <td class="py-3 px-6 text-left">
+                                        <div class="flex items-center">
+                                            <div class="mr-2">
+                                                <img class="w-10 h-10 rounded-full" src="https://avatars.dicebear.com/api/adventurer-neutral/{{ $subscriber->SUBSCRIBER_NUMBER }}.svg" />
+                                            </div>
+                                            <span>{{ $subscriber->NAME }}</span>
                                         </div>
-                                        <span>{{ $subscriber->NAME }}</span>
-                                    </div>
-                                </td>
+                                    </td>
 
-                                <!-- Phone Number -->
-                                <td class="py-3 px-6 text-center whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <span class="font-medium">{{ $subscriber->SUBSCRIBER_NUMBER }}</span>
-                                    </div>
-                                </td>
+                                    <!-- Phone Number -->
+                                    <td class="py-3 px-6 text-center whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <span class="font-medium">{{ $subscriber->SUBSCRIBER_NUMBER }}</span>
+                                        </div>
+                                    </td>
 
-                                <!-- Group -->
-                                <td class="py-3 px-6 text-center">
-                                    <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $subscriber->GROUP_ID }}</span>
-                                </td>
-
+                                    <!-- Group -->
+                                    <td class="py-3 px-6 text-center">
+                                        <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $subscriber->GROUP_ID }}</span>
+                                    </td>
+                                </div>
                                 <!-- Actions -->
                                 <td class="py-3 px-6 text-center">
                                     <div class="flex ">
