@@ -23,6 +23,15 @@ class SubscribersController extends Controller
        $this->filterOptions = $this->subs->keyBy('GROUP_ID');
     }
 
+    public function showGroup(Request $request)
+    {
+
+        $number = $request->number;
+        $name = $request->name;
+        $filtered = $this->subs->where('SUBSCRIBER_NUMBER', $request->number);
+
+        return response()->json(['name' => $name, 'number' => $number, 'groups' => $filtered]);
+    }
     /**
      * Returns the unfiltered collection 
      * for dashboard view
@@ -41,6 +50,9 @@ class SubscribersController extends Controller
      */
     public function filters(Request $request)
     {
+        $request->validate([
+            'group' => 'required'
+        ]);
         $filter = $request->group;
         $filtered = $this->subs->filter(function ($subs) use ($filter){
             if ($subs->GROUP_ID ==  $filter){

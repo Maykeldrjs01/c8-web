@@ -36,12 +36,24 @@ class SubscribersController extends Controller
         ]); 
     }
 
+    public function showGroup(Request $request)
+    {
+        $number = $request->number;
+        $name = $request->name;
+        $filtered = $this->subs->where('SUBSCRIBER_NUMBER', $request->number);
+
+        return response()->json(['name' => $name, 'number' => $number, 'groups' => $filtered]);
+    }
+
     /** 
      * Returns a filtered collection of subscribers
      * by the GROUP_ID in db
      */
     public function filters(Request $request)
     {
+        $request->validate([
+            'group' => 'required'
+        ]);
         $filter = $request->group;
         $filtered = $this->subs->filter(function ($subs) use ($filter){
             if ($subs->GROUP_ID ==  $filter){
