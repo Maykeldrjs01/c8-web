@@ -19,14 +19,12 @@
                 <div class="flex flex-row w-full mt-1">
                     <p class="place-items-center mr-2 text-lg font-black text-gray-800 flex">Filter Table <span class="ml-3 font-black text-4xl text-gray-300">|</span></p>
 
-                    <!-- Reset button -->
-                    <a href="{{ route('admin.dashboard.index') }}" class="flex justify-center content-center w-32 rounded-md border border-gray-300 shadow-sm py-3 bg-red-600 text-sm font-bold text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 mr-4">Reset</a>
 
                     <!-- Submit filter button -->
-                    <input type="submit" value="Submit" class="flex justify-center w-32 rounded-md border border-gray-300 shadow-sm bg-blue-400 text-sm font-bold text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-sky-500">
+                    <!-- <input type="submit" value="Submit" class="flex justify-center w-32 rounded-md border border-gray-300 shadow-sm bg-blue-400 text-sm font-bold text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-sky-500"> -->
 
                     <!-- Dropdown filters button -->
-                    <select name="group" class="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-bold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-primary ml-1" require>
+                    <select name="group" class="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-bold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-primary ml-1" onchange="this.form.submit();">
                         <option disabled selected>Select Group</option>
                         @foreach($groups as $option)
                         @if(isset($filter))
@@ -40,6 +38,17 @@
                         @endif
                         @endforeach
                     </select>
+
+                    <!-- Reset button -->
+                    <a href="{{ route('admin.dashboard.index') }}" class="flex justify-center align-middle content-center w-32 rounded-md border border-gray-300 shadow-sm py-3 bg-red-600 text-sm font-bold text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 ml-4">
+                        <svg width="21px" height="21px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+                            <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="matrix(0 1 1 0 2.5 2.5)">
+                                <path d="m3.98652376 1.07807068c-2.38377179 1.38514556-3.98652376 3.96636605-3.98652376 6.92192932 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8" />
+                                <path d="m4 1v4h-4" transform="matrix(1 0 0 -1 0 6)" />
+                            </g>
+                        </svg>
+                        <span class="pl-2">Reset</span>
+                    </a>
                 </div>
             </form>
             <!-- End filer section -->
