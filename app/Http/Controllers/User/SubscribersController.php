@@ -59,7 +59,7 @@ class SubscribersController extends Controller
                 return true;
             }
         });
-        Alert::toast('Filter applied!', 'info');
+        Alert::toast('Filter applied!', 'success');
         return view('user.dashboard', [
             'subs' => $filtered,
             'groups' => $this->filterOptions,
