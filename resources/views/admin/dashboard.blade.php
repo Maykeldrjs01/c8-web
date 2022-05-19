@@ -62,15 +62,15 @@
 
                             <!-- Display all information about the subscribers in the table -->
                             @foreach($subs as $subscriber)
-                            <tr class="border-b border-gray-200 hover:bg-gray-100" onclick="openModal('{{ $subscriber->NAME }}','{{ $subscriber->SUBSCRIBER_NUMBER }}')">
+                            <tr class="border-b border-gray-200 hover:bg-gray-100 select-none">
                                 <!-- Name -->
-                                <div onclick="openModal()">
-                                    <td class="py-3 px-6 text-left">
+                                <div>
+                                    <td class="py-3 px-6 text-left cursor-pointer" onclick="openModal('{{ $subscriber->NAME }}','{{ $subscriber->SUBSCRIBER_NUMBER }}')">
                                         <div class="flex items-center">
                                             <div class="mr-2">
                                                 <img class="w-10 h-10 rounded-full" src="https://avatars.dicebear.com/api/adventurer-neutral/{{ $subscriber->SUBSCRIBER_NUMBER }}.svg" />
                                             </div>
-                                            <span>{{ $subscriber->NAME }}</span>
+                                            <span class="text-base">{{ $subscriber->NAME }}</span>
                                         </div>
                                     </td>
 
@@ -83,39 +83,41 @@
 
                                     <!-- Group -->
                                     <td class="py-3 px-6 text-center">
-                                        <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{{ $subscriber->GROUP_ID }}</span>
+                                        <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-sm">{{ $subscriber->GROUP_ID }}</span>
                                     </td>
                                 </div>
                                 <!-- Actions -->
-                                <td class="py-3 px-6 text-center">
-                                    <div class="flex ">
-                                        <div class="w-14 mr-0 transform hover:scale-110 transition ease-in-out">
-                                            <form id="subs-edit" method="POST" action="{{ route('admin.subscribers.edit') }}">
-                                                @csrf
-                                                <!-- Hidden input for form submission (NO NEED TO CHANGE THE LAYOUT) -->
-                                                <input type="hidden" name="name" value="{{ $subscriber->NAME }}">
-                                                <input type="hidden" name="group_id" value="{{ $subscriber->GROUP_ID }}">
-                                                <!-- Edit button -->
-                                                <x-button type="submit" class="transition-transform bg-green-500 hover:bg-green-600 ease-linear duration-500">
-                                                    Edit
-                                                </x-button>
-                                            </form>
+                                <div>
+                                    <td class="py-3 px-6 text-center">
+                                        <div class="flex">
+                                            <div class="w-14 mr-0 transform hover:scale-110 transition ease-in-out">
+                                                <form id="subs-edit" method="POST" action="{{ route('admin.subscribers.edit') }}">
+                                                    @csrf
+                                                    <!-- Hidden input for form submission (NO NEED TO CHANGE THE LAYOUT) -->
+                                                    <input type="hidden" name="name" value="{{ $subscriber->NAME }}">
+                                                    <input type="hidden" name="group_id" value="{{ $subscriber->GROUP_ID }}">
+                                                    <!-- Edit button -->
+                                                    <button type="submit" class="transition-transform bg-green-500 hover:bg-green-600 ease-linear duration-500 inline-flex items-center px-4 py-2 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300">
+                                                        Edit
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <div class="w-2 ml-5 transform hover:scale-110 transition ease-in-out">
+                                                <form method="POST" action="{{ route('admin.subscribers.delete') }}">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <!-- Hidden input for form submission (NO NEED TO CHANGE THE LAYOUT) -->
+                                                    <input type="hidden" name="name" value="{{ $subscriber->NAME }}">
+                                                    <input type="hidden" name="group_id" value="{{ $subscriber->GROUP_ID }}">
+                                                    <!-- Delete button -->
+                                                    <button type="submit" class="transition-transform bg-red-500 ease-linear duration-500 inline-flex items-center px-4 py-2 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300" onclick="return confirm('This action cannot be undone. Are you sure?')">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
-                                        <div class="w-2 ml-5 transform hover:scale-110 transition ease-in-out">
-                                            <form method="POST" action="{{ route('admin.subscribers.delete') }}">
-                                                @method('DELETE')
-                                                @csrf
-                                                <!-- Hidden input for form submission (NO NEED TO CHANGE THE LAYOUT) -->
-                                                <input type="hidden" name="name" value="{{ $subscriber->NAME }}">
-                                                <input type="hidden" name="group_id" value="{{ $subscriber->GROUP_ID }}">
-                                                <!-- Delete button -->
-                                                <x-button type="submit" class="bg-red-500 hover:bg-red-800" onclick="return confirm('This action cannot be undone. Are you sure?')">
-                                                    Delete
-                                                </x-button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                </div>
                             </tr>
                             @endforeach
                         </tbody>
