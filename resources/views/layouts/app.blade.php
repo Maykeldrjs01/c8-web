@@ -94,6 +94,8 @@
             modal_name.innerHTML = name+"'s Info";
             var modal_number = document.getElementById("modal-number"); 
             modal_number.value = number;
+            var modal_group_label = document.getElementById("modal-group-label"); 
+            modal_group_label.innerHTML = "Group IDs ("+groups.length+")";
             for (var i = 0; i < groups.length; i++){
                 var newSpan = document.createElement('span');
                 newSpan.setAttribute('class', 'bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-sm w-fit');
