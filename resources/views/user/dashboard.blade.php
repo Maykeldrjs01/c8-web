@@ -25,7 +25,7 @@
 
                     <!-- Dropdown filters button -->
                     <select name="group" class="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-bold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-primary ml-1" onchange="this.form.submit();">
-                        <option disabled selected>Select Group</option>
+                        <option disabled selected>Select by Group</option>
                         @foreach($groups as $option)
                         @if(isset($filter))
 
