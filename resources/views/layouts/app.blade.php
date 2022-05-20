@@ -83,8 +83,11 @@
                         valueToSpan(data.name, data.number);
                     }
             });
-            modal.classList.toggle("closed");
-            modalOverlay.classList.toggle("closed");
+            setTimeout(()=>{
+                modal.classList.toggle("closed");
+                modalOverlay.classList.toggle("closed");
+            }, 200);
+            
         }
 
 
